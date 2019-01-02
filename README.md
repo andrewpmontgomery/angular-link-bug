@@ -1,27 +1,30 @@
 # LinkBug
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4,
+then pared down to the minimum required to demonstrate the bug.
 
-## Development server
+1. Download the project
+2. npm install
+3. npm start
+4. Browse to http://localhost:4200/
+5. Open the browser console (F12)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+6. Click on "1. Sibling link from brother to (sister)"
+   - that should work fine here
+7. Click on "2. Sibling link from sister to... (brother)"
+   - that should fail
+   - the console should show the following error:
+   > Error: Cannot match any routes. URL Segment: 'my-family/sister/../brother'
+8. Click on "/other/animals" near the top
+9. Click on "1. Sibling link from brother to (sister)"
+   - that should fail, even though it worked at step #6 above
+   - the console should show the following error:
+   > Error: Cannot match any routes. URL Segment: 'other/animals/brother/sister'
+10. Click on "Sister" under the Home menu, or navigate directly to /other/animals/sister
+11. Click on "2. Sibling link from sister to... (brother)"
+   - that should fail, as it did in step #7 above
+   - the console should show the following error:
+   > Error: Cannot match any routes. URL Segment: 'other/animals/sister/../brother'
+12. Other weird behavior:
+   - Click on "3. Parent link from sister to .." - nothing happens!
+   - Click on "4. Double-parent link from sister to ../.." - the router loads the NieceComponent!
